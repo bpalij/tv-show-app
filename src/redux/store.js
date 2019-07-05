@@ -1,5 +1,5 @@
 import { combineReducers, createStore } from 'redux';
-import { START_LOAD_DATA, LOADED_DATA } from './actionTypes';
+import { START_LOAD_DATA, LOADED_DATA, CHANGED_PARAMS } from './actionTypes';
 
 const disableInput = (state = true, action) => {
   switch (action.type){
@@ -48,6 +48,8 @@ const paginator = (state = defaultPaginator, action) => {
         disableFirst: !!(typeof(headerPage)!=='number' || headerPage<=1),
         disableLast: !!(typeof(headerPages)!=='number' || headerPage>=headerPages),
       };
+    case CHANGED_PARAMS:
+      return { ...defaultPaginator };
     default:
       return state;
   }
