@@ -43,8 +43,8 @@ const paginator = (state = defaultPaginator, action) => {
       const headerPage = action.data.headers['x-pagination-page'];
       const headerPages = action.data.headers['x-pagination-page-count'];
       return {
-        page: headerPage || 1,
-        pages: headerPages || 0,
+        page: +headerPage || 1,
+        pages: +headerPages || 0,
         disableFirst: !!(typeof(headerPage)!=='number' || headerPage<=1),
         disableLast: !!(typeof(headerPages)!=='number' || headerPage>=headerPages),
       };
