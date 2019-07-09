@@ -12,7 +12,7 @@ const disableInput = (state = true, action) => {
   }
 }
 
-const data = (state = {}, action) => {
+const data = (state = [], action) => {
   switch (action.type) {
     case LOADED_DATA:
       return action.data.data;
@@ -40,11 +40,11 @@ const defaultPaginator = {
 const paginator = (state = defaultPaginator, action) => {
   switch (action.type) {
     case LOADED_DATA:
-      const headerPage = action.data.headers['x-pagination-page'];
-      const headerPages = action.data.headers['x-pagination-page-count'];
+      const headerPage = +action.data.headers['x-pagination-page'];
+      const headerPages = +action.data.headers['x-pagination-page-count'];
       return {
-        page: +headerPage || 1,
-        pages: +headerPages || 0,
+        page: headerPage || 1,
+        pages: headerPages || 0,
         disableFirst: !!(typeof(headerPage)!=='number' || headerPage<=1),
         disableLast: !!(typeof(headerPages)!=='number' || headerPage>=headerPages),
       };
