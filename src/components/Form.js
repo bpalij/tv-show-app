@@ -4,7 +4,23 @@ const yearOptions = [''];
 for(let i=((new Date()).getFullYear()); i>=1800; i--){
   yearOptions.push(`${i}`);
 };
-const sortOptions = ['Trending', 'Popular', 'Most played', 'Most watched', 'Most collected', 'Most anticipated'];
+const sortOptions = [
+  {value:'trending', text:'Trending'}, 
+  {value:'popular', text:'Popular'}, 
+  {value:'played/weekly', text:'Most played (weekly)'},
+  {value:'played/monthly', text:'Most played (monthly)'},
+  {value:'played/yearly', text:'Most played (yearly)'},
+  {value:'played/all', text:'Most played (all)'},
+  {value:'watched/weekly', text:'Most watched (weekly)'},
+  {value:'watched/monthly', text:'Most watched (monthly)'},
+  {value:'watched/yearly', text:'Most watched (yearly)'},
+  {value:'watched/all', text:'Most watched (all)'},
+  {value:'collected/weekly', text:'Most collected (weekly)'},
+  {value:'collected/monthly', text:'Most collected (monthly)'},
+  {value:'collected/yearly', text:'Most collected (yearly)'},
+  {value:'collected/all', text:'Most collected (all)'},
+  {value:'anticipated', text:'Most anticipated'},
+];
 
 class Form extends Component{
   constructor(props){
@@ -12,7 +28,7 @@ class Form extends Component{
     this.state={
       query: '',
       year: '',
-      sort: 'Trending',
+      sort: 'trending',
     };
   }
   render(){
@@ -33,7 +49,7 @@ class Form extends Component{
           <div className="form-item">
             <label htmlFor="sort-select">Sort</label>
             <select id="sort-select" value={sort} onChange={(e) => {this.setState({sort: e.target.value})}}>
-              {sortOptions.map((x) => (<option key={x} value={x}>{x}</option>))}
+              {sortOptions.map((x) => (<option key={x.value} value={x.value}>{x.text}</option>))}
             </select>
           </div>
         </div>
