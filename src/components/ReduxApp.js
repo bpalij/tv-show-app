@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { startLoadData, loadedData, changeParams } from '../redux/actions';
 import { connect } from 'react-redux';
 import './ReduxApp.css';
 import Form from './Form';
 
-function ReduxApp(props){
-  return (
-    <div className="flexbox-center">
-      <Form />
-    </div>
-  );
+class ReduxApp extends Component {
+  render() {
+    return (
+      <div className="flexbox-center">
+        <Form />
+      </div>
+    )
+  }
 }
 
 ReduxApp.propTypes = {
