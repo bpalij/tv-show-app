@@ -5,6 +5,7 @@ import { startLoadData, loadedData, changeParams } from '../redux/actions';
 import { connect } from 'react-redux';
 import './ReduxApp.css';
 import Form from './Form';
+import Table from './Table';
 
 class ReduxApp extends Component {
   componentDidMount() {
@@ -29,9 +30,11 @@ class ReduxApp extends Component {
       .catch((e) => {alert(`Error '${e}', try to reload page`)});
   }
   render() {
+    const { headers, data } = this.props;
     return (
       <div className="flexbox-center">
         <Form />
+        <Table headers={headers} data={data} />
       </div>
     )
   }

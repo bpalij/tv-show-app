@@ -28,3 +28,6 @@ body{
   display: block;
   width: 100%;
 }
+.main-table th, .main-table td{
+  text-align: left;
+}
