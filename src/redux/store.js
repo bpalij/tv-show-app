@@ -45,8 +45,8 @@ const paginator = (state = defaultPaginator, action) => {
       return {
         page: headerPage || 1,
         pages: headerPages || 0,
-        disableFirst: !!(typeof(headerPage)!=='number' || headerPage<=1),
-        disableLast: !!(typeof(headerPages)!=='number' || headerPage>=headerPages),
+        disableFirst: !!(typeof(headerPage)!=='number' || !headerPage || headerPage<=1),
+        disableLast: !!(typeof(headerPages)!=='number' || typeof(headerPage)!=='number' || !headerPage || !headerPages || headerPage>=headerPages),
       };
     case CHANGED_PARAMS:
       return { ...defaultPaginator };
