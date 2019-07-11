@@ -36,10 +36,10 @@ class ReduxApp extends Component {
       .catch((e) => {alert(`Error '${e}', try to reload page`)});
   }
   render() {
-    const { headers, data, images } = this.props;
+    const { headers, data, images, disableInput, changeParams, startLoadData, loadedData } = this.props;
     return (
       <div className="flexbox-center">
-        <Form />
+        <Form disableInput={disableInput} changeParams={changeParams} startLoadData={startLoadData} loadedData={loadedData} />
         <Table headers={headers} data={data} images={images} />
       </div>
     )
@@ -60,11 +60,16 @@ ReduxApp.propTypes = {
     disableFirst: PropTypes.bool.isRequired,
     disableLast: PropTypes.bool.isRequired,
   }).isRequired,
+  filters: PropTypes.shape({
+    query: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+    sort: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 const mapStateToProps = (state) => {
-  const { disableInput, data, headers, images, paginator } = state;
-  return { disableInput, data, headers, images, paginator };
+  const { disableInput, data, headers, images, paginator, filters } = state;
+  return { disableInput, data, headers, images, paginator, filters };
 }
 
 const mapDispatchToProps = {

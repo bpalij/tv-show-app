@@ -57,14 +57,26 @@ const paginator = (state = defaultPaginator, action) => {
         disableFirst: !!(typeof(headerPage)!=='number' || !headerPage || headerPage<=1),
         disableLast: !!(typeof(headerPages)!=='number' || typeof(headerPage)!=='number' || !headerPage || !headerPages || headerPage>=headerPages),
       };
-    case CHANGED_PARAMS:
-      return { ...defaultPaginator };
     default:
       return state;
   }
 }
 
 // TODO add reducer for filters
+const defaultFilters = {
+  query: '',
+  year: '',
+  sort: 'trending',
+};
+
+const filters = (state = defaultFilters, action) => {
+  switch(action.type) {
+    case CHANGED_PARAMS:
+      return action.data;
+    default:
+      return state;
+  }
+};
 
 const store = createStore(combineReducers({
   disableInput,
@@ -72,5 +84,6 @@ const store = createStore(combineReducers({
   headers,
   images,
   paginator,
+  filters,
 }), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 export default store;
