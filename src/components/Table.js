@@ -13,7 +13,7 @@ function getNumber(headers, index) {
 }
 
 function Table(props){
-  const { headers, data } = props;
+  const { headers, data, images } = props;
   return (
     <table className="form-table-width main-table">
       <thead>
@@ -30,7 +30,7 @@ function Table(props){
           return (
             <tr key={x.show.ids.trakt}>
               <td>{getNumber(headers, i)}</td>
-              <td></td>
+              <td><img src={images[i]} alt={`${x.show.title} poster`} /></td>
               <td>{x.show.title}</td>
               <td>{x.watchers}</td>
               <td>{x.show.year}</td>
@@ -45,6 +45,7 @@ function Table(props){
 Table.propTypes = {
   headers: PropTypes.object.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 export default Table;

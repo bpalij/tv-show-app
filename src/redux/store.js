@@ -24,10 +24,19 @@ const data = (state = [], action) => {
 const headers = (state = {}, action) => {
   switch (action.type) {
     case LOADED_DATA:
-      return action.data.headers 
+      return action.data.headers; 
     default:
       return state;
   }  
+}
+
+const images = (state = [], action) => {
+  switch (action.type) {
+    case LOADED_DATA:
+      return action.data.images;
+    default:
+      return state;
+  }
 }
 
 const defaultPaginator = {
@@ -61,6 +70,7 @@ const store = createStore(combineReducers({
   disableInput,
   data,
   headers,
+  images,
   paginator,
 }), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 export default store;

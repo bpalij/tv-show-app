@@ -6,11 +6,13 @@ import { connect } from 'react-redux';
 import './ReduxApp.css';
 import Form from './Form';
 import Table from './Table';
+import getImageLinks from '../misc/getImageLinks';
 
 class ReduxApp extends Component {
   componentDidMount() {
     const { loadedData } = this.props;
     let headers;
+    let dataTemp;
     fetch('https://api.trakt.tv/shows/trending',{
       headers:{
         'Content-Type': 'application/json',
@@ -26,15 +28,19 @@ class ReduxApp extends Component {
           throw new Error(`Error ${res.status}: ${res.statusText}`);
         }
       })
-      .then((data) => {loadedData(data, headers);})
+      .then((data) => {
+        dataTemp=data;
+        return getImageLinks(data);
+      })
+      .then((img) => {loadedData(dataTemp, headers, img);})
       .catch((e) => {alert(`Error '${e}', try to reload page`)});
   }
   render() {
-    const { headers, data } = this.props;
+    const { headers, data, images } = this.props;
     return (
       <div className="flexbox-center">
         <Form />
-        <Table headers={headers} data={data} />
+        <Table headers={headers} data={data} images={images} />
       </div>
     )
   }
@@ -47,6 +53,7 @@ ReduxApp.propTypes = {
   disableInput: PropTypes.bool.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   headers: PropTypes.object.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
   paginator: PropTypes.shape({
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
@@ -56,8 +63,8 @@ ReduxApp.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { disableInput, data, headers, paginator } = state;
-  return { disableInput, data, headers, paginator };
+  const { disableInput, data, headers, images, paginator } = state;
+  return { disableInput, data, headers, images, paginator };
 }
 
 const mapDispatchToProps = {

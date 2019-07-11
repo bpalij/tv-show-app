@@ -31,3 +31,6 @@ body{
 .main-table th, .main-table td{
   text-align: left;
 }
+.main-table td img{
+  width: 450px;
+}

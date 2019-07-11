@@ -6,12 +6,13 @@ export const startLoadData = () => {
   }
 }
 
-export const loadedData = (data, headers) => {
+export const loadedData = (data, headers, images) => {
   return {
     type: LOADED_DATA,
     data: {
       data,
       headers,
+      images,
     }
   }
 }
