@@ -28,12 +28,12 @@ function Table(props){
       <tbody>
         {data.map((x, i) => {
           return (
-            <tr key={x.show.ids.trakt}>
+            <tr key={x.show ? x.show.ids.trakt : x.ids.trakt}>
               <td>{getNumber(headers, i)}</td>
-              <td><img src={images[i]} alt={`${x.show.title} poster`} /></td>
-              <td>{x.show.title}</td>
+              <td><img src={images[i]} alt={`${x.show ? x.show.title : x.title} poster`} /></td>
+              <td>{x.show ? x.show.title : x.title}</td>
               <td>{x.watchers}</td>
-              <td>{x.show.year}</td>
+              <td>{x.show ? x.show.year : x.year}</td>
             </tr>
           )
         })}
