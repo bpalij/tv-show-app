@@ -29,7 +29,7 @@ function paramsQuery(filters){
   if (filters.query && filters.year) {
     return `${filters.sort}?query=${filters.query}&years=${filters.year}`;
   } else if (filters.query) {
-    return `${filters.sort}?query=${filters.query}&years=${filters.year}`;
+    return `${filters.sort}?query=${filters.query}`;
   } else if (filters.year) {
     return `${filters.sort}?years=${filters.year}`;
   } else {
