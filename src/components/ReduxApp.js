@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import './ReduxApp.css';
 import Form from './Form';
 import Table from './Table';
+import Paginator from './Paginator';
 import getImageLinks from '../misc/getImageLinks';
 
 class ReduxApp extends Component {
@@ -36,11 +37,13 @@ class ReduxApp extends Component {
       .catch((e) => {alert(`Error '${e}', try to reload page`)});
   }
   render() {
-    const { headers, data, images, disableInput, changeParams, startLoadData, loadedData } = this.props;
+    const { headers, data, images, disableInput, changeParams, startLoadData, loadedData, paginator, filters } = this.props;
     return (
       <div className="flexbox-center">
         <Form disableInput={disableInput} changeParams={changeParams} startLoadData={startLoadData} loadedData={loadedData} />
         <Table headers={headers} data={data} images={images} />
+        <Paginator paginator={paginator} startLoadData={startLoadData} loadedData={loadedData} filters={filters} disableInput={disableInput} />
+        <div className="final-whitespace" />
       </div>
     )
   }

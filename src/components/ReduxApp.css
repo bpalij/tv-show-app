@@ -34,3 +34,6 @@ body{
 .main-table td img{
   width: 450px;
 }
+.final-whitespace{
+  min-height: 10px;
+}
