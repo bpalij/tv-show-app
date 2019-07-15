@@ -2,7 +2,7 @@ import { combineReducers, createStore } from 'redux';
 import { START_LOAD_DATA, LOADED_DATA, CHANGED_PARAMS } from './actionTypes';
 
 const disableInput = (state = true, action) => {
-  switch (action.type){
+  switch (action.type) {
     case START_LOAD_DATA:
       return true;
     case LOADED_DATA:
@@ -10,7 +10,7 @@ const disableInput = (state = true, action) => {
     default:
       return state;
   }
-}
+};
 
 const data = (state = [], action) => {
   switch (action.type) {
@@ -19,16 +19,16 @@ const data = (state = [], action) => {
     default:
       return state;
   }
-}
+};
 
 const headers = (state = {}, action) => {
   switch (action.type) {
     case LOADED_DATA:
-      return action.data.headers; 
+      return action.data.headers;
     default:
       return state;
-  }  
-}
+  }
+};
 
 const images = (state = [], action) => {
   switch (action.type) {
@@ -37,30 +37,32 @@ const images = (state = [], action) => {
     default:
       return state;
   }
-}
+};
 
 const defaultPaginator = {
   page: 1,
   pages: 0,
   disableFirst: true,
   disableLast: true,
-}
+};
 
 const paginator = (state = defaultPaginator, action) => {
+  let headerPage;
+  let headerPages;
   switch (action.type) {
     case LOADED_DATA:
-      const headerPage = +action.data.headers['x-pagination-page'];
-      const headerPages = +action.data.headers['x-pagination-page-count'];
+      headerPage = +action.data.headers['x-pagination-page'];
+      headerPages = +action.data.headers['x-pagination-page-count'];
       return {
         page: headerPage || 1,
         pages: headerPages || 0,
-        disableFirst: !!(typeof(headerPage)!=='number' || !headerPage || headerPage<=1),
-        disableLast: !!(typeof(headerPages)!=='number' || typeof(headerPage)!=='number' || !headerPage || !headerPages || headerPage>=headerPages),
+        disableFirst: !!(typeof (headerPage) !== 'number' || !headerPage || headerPage <= 1),
+        disableLast: !!(typeof (headerPages) !== 'number' || typeof (headerPage) !== 'number' || !headerPage || !headerPages || headerPage >= headerPages),
       };
     default:
       return state;
   }
-}
+};
 
 // TODO add reducer for filters
 const defaultFilters = {
@@ -70,7 +72,7 @@ const defaultFilters = {
 };
 
 const filters = (state = defaultFilters, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case CHANGED_PARAMS:
       return action.data;
     default:
@@ -78,12 +80,18 @@ const filters = (state = defaultFilters, action) => {
   }
 };
 
-const store = createStore(combineReducers({
-  disableInput,
-  data,
-  headers,
-  images,
-  paginator,
-  filters,
-}), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+/* eslint-disable no-underscore-dangle */
+const store = createStore(
+  combineReducers({
+    disableInput,
+    data,
+    headers,
+    images,
+    paginator,
+    filters,
+  }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+/* eslint-enable */
+
 export default store;
