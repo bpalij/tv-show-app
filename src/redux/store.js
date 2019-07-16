@@ -66,7 +66,6 @@ const paginator = (state = defaultPaginator, action) => {
   }
 };
 
-// TODO add reducer for filters
 const defaultFilters = {
   query: '',
   year: '',
