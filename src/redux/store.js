@@ -1,5 +1,7 @@
 import { combineReducers, createStore } from 'redux';
-import { START_LOAD_DATA, LOADED_DATA, CHANGED_PARAMS } from './actionTypes';
+import {
+  START_LOAD_DATA, LOADED_DATA, CHANGED_PARAMS, ERROR_MESSAGE,
+} from './actionTypes';
 
 const disableInput = (state = true, action) => {
   switch (action.type) {
@@ -80,6 +82,15 @@ const filters = (state = defaultFilters, action) => {
   }
 };
 
+const err = (state = '', action) => {
+  switch (action.type) {
+    case ERROR_MESSAGE:
+      return action.data;
+    default:
+      return state;
+  }
+};
+
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   combineReducers({
@@ -89,6 +100,7 @@ const store = createStore(
     images,
     paginator,
     filters,
+    err,
   }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );

@@ -37,3 +37,9 @@ body{
 .final-whitespace{
   min-height: 10px;
 }
+.error-message{
+  font-size: 2em;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}

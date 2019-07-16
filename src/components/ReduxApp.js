@@ -8,10 +8,11 @@ import Form from './Form';
 import Table from './Table';
 import Paginator from './Paginator';
 import getImageLinks from '../misc/getImageLinks';
+import ErrorMessage from './ErrorMesage';
 
 class ReduxApp extends Component {
   componentDidMount() {
-    const { loadedData } = this.props;
+    const { loadedData, setError } = this.props;
     let headers;
     let dataTemp;
     fetch('https://api.trakt.tv/shows/trending', {
@@ -33,7 +34,7 @@ class ReduxApp extends Component {
         return getImageLinks(data);
       })
       .then((img) => { loadedData(dataTemp, headers, img); })
-      .catch((e) => { alert(`Error '${e}', try to reload page`); });
+      .catch((e) => { setError(`Error '${e}', try to reload page`); });
   }
 
   render() {
@@ -47,24 +48,33 @@ class ReduxApp extends Component {
       loadedData,
       paginator,
       filters,
+      err,
+      setError,
     } = this.props;
     return (
       <div className="flexbox-center">
+        {!err && (
         <Form
           disableInput={disableInput}
           changeParams={changeParams}
           startLoadData={startLoadData}
           loadedData={loadedData}
+          setError={setError}
         />
-        <Table headers={headers} data={data} images={images} />
+        )}
+        {!err && <Table headers={headers} data={data} images={images} />}
+        {!err && (
         <Paginator
           paginator={paginator}
           startLoadData={startLoadData}
           loadedData={loadedData}
           filters={filters}
           disableInput={disableInput}
+          setError={setError}
         />
-        <div className="final-whitespace" />
+        )}
+        {!err && <div className="final-whitespace" />}
+        {err && <ErrorMessage err={err} />}
       </div>
     );
   }
@@ -75,6 +85,8 @@ ReduxApp.propTypes = {
   loadedData: PropTypes.func.isRequired,
   changeParams: PropTypes.func.isRequired,
   disableInput: PropTypes.bool.isRequired,
+  setError: PropTypes.bool.isRequired,
+  err: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   headers: PropTypes.instanceOf(Object).isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -93,10 +105,10 @@ ReduxApp.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    disableInput, data, headers, images, paginator, filters,
+    disableInput, data, headers, images, paginator, filters, err,
   } = state;
   return {
-    disableInput, data, headers, images, paginator, filters,
+    disableInput, data, headers, images, paginator, filters, err,
   };
 };
 
@@ -104,6 +116,7 @@ const mapDispatchToProps = {
   startLoadData: actionCreators.startLoadData,
   loadedData: actionCreators.loadedData,
   changeParams: actionCreators.changeParams,
+  setError: actionCreators.setError,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxApp);

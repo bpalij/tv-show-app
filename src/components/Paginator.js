@@ -24,7 +24,9 @@ class Paginator extends Component {
   }
 
   loadPage(page) {
-    const { loadedData, startLoadData, filters } = this.props;
+    const {
+      loadedData, startLoadData, filters, setError,
+    } = this.props;
     startLoadData();
     let headers;
     let dataTemp;
@@ -47,7 +49,7 @@ class Paginator extends Component {
         return getImageLinks(data);
       })
       .then((img) => { loadedData(dataTemp, headers, img); })
-      .catch((e) => { alert(`Error '${e}', try to reload page`); });
+      .catch((e) => { setError(`Error '${e}', try to reload page`); });
   }
 
   render() {
@@ -68,6 +70,7 @@ Paginator.propTypes = {
   startLoadData: PropTypes.func.isRequired,
   loadedData: PropTypes.func.isRequired,
   disableInput: PropTypes.bool.isRequired,
+  setError: PropTypes.func.isRequired,
   paginator: PropTypes.shape({
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,

@@ -52,7 +52,9 @@ class Form extends Component {
   }
 
   buttonClick() {
-    const { changeParams, startLoadData, loadedData } = this.props;
+    const {
+      changeParams, startLoadData, loadedData, setError,
+    } = this.props;
     const newFilters = { ...this.state };
     changeParams(newFilters);
     startLoadData();
@@ -77,7 +79,7 @@ class Form extends Component {
         return getImageLinks(data);
       })
       .then((img) => { loadedData(dataTemp, headers, img); })
-      .catch((e) => { alert(`Error '${e}', try to reload page`); });
+      .catch((e) => { setError(`Error '${e}', try to reload page`); });
   }
 
   render() {
@@ -124,6 +126,7 @@ Form.propTypes = {
   startLoadData: PropTypes.func.isRequired,
   loadedData: PropTypes.func.isRequired,
   changeParams: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 };
 
 export default Form;
